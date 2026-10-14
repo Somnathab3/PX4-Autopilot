@@ -60,7 +60,7 @@ TECSControl::Param makeParam()
 	param.throttle_max = 1.f;
 	param.throttle_min = 0.f;
 	param.altitude_error_gain = 0.2f;
-	param.altitude_setpoint_gain_ff = 0.f;
+	param.altitude_setpoint_gain_ff = 1.f;
 	param.tas_error_percentage = 0.15f;
 	param.airspeed_error_gain = 0.1f;
 	param.ste_rate_time_const = 0.1f;

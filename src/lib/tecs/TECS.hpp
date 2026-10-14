@@ -861,7 +861,7 @@ private:
 		.throttle_max = 1.0f,
 		.throttle_min = 0.1f,
 		.altitude_error_gain = 0.2f,
-		.altitude_setpoint_gain_ff = 0.0f,
+		.altitude_setpoint_gain_ff = 1.0f,
 		.tas_error_percentage = 0.15f,
 		.airspeed_error_gain = 0.1f,
 		.ste_rate_time_const = 0.1f,
