@@ -175,12 +175,30 @@ param set-default MPC_Z_VEL_MAX_UP 5
 param set-default MPC_Z_VEL_MAX_DN 3
 param set-default MPC_TKO_SPEED 2.5
 param set-default MPC_LAND_SPEED 1.0
-param set-default MPC_XY_VEL_P_ACC 3
-param set-default MPC_XY_VEL_I_ACC 4
-param set-default MPC_XY_VEL_D_ACC 0.1
+param set-default MPC_XY_P 0.5
+param set-default MPC_XY_VEL_P_ACC 1.2
+param set-default MPC_XY_VEL_I_ACC 0.4
+param set-default MPC_XY_VEL_D_ACC 0.3
+param set-default MPC_TILTMAX_AIR 20
 param set-default MC_AIRMODE 1
-param set-default MC_YAWRATE_P 0.4
-param set-default MC_YAWRATE_I 0.1
+
+# Rate loop for a 2.2 t vehicle: stock gains tumble within 15 s. Set verified in
+# headless SITL hover 2026-10-14 (roll/pitch within 1.5 deg over 36 s).
+# Known item: slow yaw creep (~0.6 deg/s) in hover; tilt-yaw authority to be reviewed.
+param set-default MC_ROLLRATE_K 6
+param set-default MC_PITCHRATE_K 5
+param set-default MC_YAWRATE_K 5
+param set-default MC_ROLLRATE_P 0.4
+param set-default MC_PITCHRATE_P 0.4
+param set-default MC_ROLLRATE_I 0.4
+param set-default MC_PITCHRATE_I 0.4
+param set-default MC_ROLLRATE_D 0.015
+param set-default MC_PITCHRATE_D 0.015
+param set-default MC_YAWRATE_P 0.5
+param set-default MC_YAWRATE_I 0.2
+param set-default MC_ROLL_P 5
+param set-default MC_PITCH_P 4
+param set-default MC_YAW_P 2.5
 
 param set-default MIS_TAKEOFF_ALT 30
 param set-default NAV_ACC_RAD 40
