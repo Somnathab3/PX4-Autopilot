@@ -1,0 +1,187 @@
+#!/bin/sh
+#
+# @name Research eVTOL tiltrotor (Joby-like, six tilting props)
+#
+# @type VTOL Tiltrotor
+#
+# Similar-to, not actual, parameters of a ~2.2 t six-prop tilt-prop eVTOL.
+# Generated geometry: airmetro-sim/models/generators/gen_evtol_models.py
+# Gazebo model: Tools/simulation/gz/models/evtol_joby_like
+#
+
+. ${R}etc/init.d/rc.vtol_defaults
+
+PX4_SIMULATOR=${PX4_SIMULATOR:=gz}
+PX4_GZ_WORLD=${PX4_GZ_WORLD:=default}
+PX4_SIM_MODEL=${PX4_SIM_MODEL:=evtol_joby_like}
+
+param set-default SIM_GZ_EN 1 # Gazebo bridge
+param set-default SENS_EN_ARSPDSIM 1
+
+param set-default MAV_TYPE 21
+
+# Motor failure detection reads 0 A in SITL for VTOL; keep disabled as in stock VTOL
+param set-default FD_ACT_EN 0
+param set-default FD_ESCS_EN 0
+
+# ---------------- control allocation: tiltrotor, 6 rotors, 4 tilt servos ----------------
+param set-default CA_AIRFRAME 3
+param set-default CA_ROTOR_COUNT 6
+
+# Rotor positions in FRD body frame [m], from derived_px4_values.json
+# 0: right inboard wing  (ccw)   tilt servo 1 (right wing pair)
+param set-default CA_ROTOR0_PX 0.9
+param set-default CA_ROTOR0_PY 2.2
+param set-default CA_ROTOR0_PZ -1.25
+param set-default CA_ROTOR0_KM 0.05
+param set-default CA_ROTOR0_TILT 1
+# 1: left inboard wing   (cw)    tilt servo 2 (left wing pair)
+param set-default CA_ROTOR1_PX 0.9
+param set-default CA_ROTOR1_PY -2.2
+param set-default CA_ROTOR1_PZ -1.25
+param set-default CA_ROTOR1_KM -0.05
+param set-default CA_ROTOR1_TILT 2
+# 2: right outboard wing (cw)    tilt servo 1
+param set-default CA_ROTOR2_PX 0.9
+param set-default CA_ROTOR2_PY 4.6
+param set-default CA_ROTOR2_PZ -1.25
+param set-default CA_ROTOR2_KM -0.05
+param set-default CA_ROTOR2_TILT 1
+# 3: left outboard wing  (ccw)   tilt servo 2
+param set-default CA_ROTOR3_PX 0.9
+param set-default CA_ROTOR3_PY -4.6
+param set-default CA_ROTOR3_PZ -1.25
+param set-default CA_ROTOR3_KM 0.05
+param set-default CA_ROTOR3_TILT 2
+# 4: right tail          (cw)    tilt servo 3
+param set-default CA_ROTOR4_PX -3.6
+param set-default CA_ROTOR4_PY 1.4
+param set-default CA_ROTOR4_PZ -1.55
+param set-default CA_ROTOR4_KM -0.05
+param set-default CA_ROTOR4_TILT 3
+# 5: left tail           (ccw)   tilt servo 4
+param set-default CA_ROTOR5_PX -3.6
+param set-default CA_ROTOR5_PY -1.4
+param set-default CA_ROTOR5_PZ -1.55
+param set-default CA_ROTOR5_KM 0.05
+param set-default CA_ROTOR5_TILT 4
+
+# Tilt servos: 0 deg = hover (thrust up), 90 deg = forward flight; wing tilts carry yaw
+param set-default CA_SV_TL_COUNT 4
+param set-default CA_SV_TL0_MINA 0
+param set-default CA_SV_TL0_MAXA 90
+param set-default CA_SV_TL0_TD 0
+param set-default CA_SV_TL0_CT 1
+param set-default CA_SV_TL1_MINA 0
+param set-default CA_SV_TL1_MAXA 90
+param set-default CA_SV_TL1_TD 0
+param set-default CA_SV_TL1_CT 1
+param set-default CA_SV_TL2_MINA 0
+param set-default CA_SV_TL2_MAXA 90
+param set-default CA_SV_TL2_TD 0
+param set-default CA_SV_TL2_CT 0
+param set-default CA_SV_TL3_MINA 0
+param set-default CA_SV_TL3_MAXA 90
+param set-default CA_SV_TL3_TD 0
+param set-default CA_SV_TL3_CT 0
+
+# Control surfaces: left aileron, right aileron, elevator, rudder
+param set-default CA_SV_CS_COUNT 4
+param set-default CA_SV_CS0_TYPE 1
+param set-default CA_SV_CS0_TRQ_R -0.5
+param set-default CA_SV_CS1_TYPE 2
+param set-default CA_SV_CS1_TRQ_R 0.5
+param set-default CA_SV_CS2_TYPE 3
+param set-default CA_SV_CS2_TRQ_P 1
+param set-default CA_SV_CS3_TYPE 4
+param set-default CA_SV_CS3_TRQ_Y 1
+
+# ---------------- Gazebo output mapping ----------------
+# ESC channels 1-6 -> motors 1-6; command range in rad/s must match <maxRotVelocity>
+param set-default SIM_GZ_EC_FUNC1 101
+param set-default SIM_GZ_EC_FUNC2 102
+param set-default SIM_GZ_EC_FUNC3 103
+param set-default SIM_GZ_EC_FUNC4 104
+param set-default SIM_GZ_EC_FUNC5 105
+param set-default SIM_GZ_EC_FUNC6 106
+param set-default SIM_GZ_EC_MIN1 10
+param set-default SIM_GZ_EC_MIN2 10
+param set-default SIM_GZ_EC_MIN3 10
+param set-default SIM_GZ_EC_MIN4 10
+param set-default SIM_GZ_EC_MIN5 10
+param set-default SIM_GZ_EC_MIN6 10
+param set-default SIM_GZ_EC_MAX1 160
+param set-default SIM_GZ_EC_MAX2 160
+param set-default SIM_GZ_EC_MAX3 160
+param set-default SIM_GZ_EC_MAX4 160
+param set-default SIM_GZ_EC_MAX5 160
+param set-default SIM_GZ_EC_MAX6 160
+
+# Servo channels 1-4 -> control surfaces (gz servo_0..servo_3), 5-8 -> tilt servos (servo_4..servo_7)
+param set-default SIM_GZ_SV_FUNC1 201
+param set-default SIM_GZ_SV_FUNC2 202
+param set-default SIM_GZ_SV_FUNC3 203
+param set-default SIM_GZ_SV_FUNC4 204
+param set-default SIM_GZ_SV_FUNC5 205
+param set-default SIM_GZ_SV_FUNC6 206
+param set-default SIM_GZ_SV_FUNC7 207
+param set-default SIM_GZ_SV_FUNC8 208
+param set-default SIM_GZ_SV_MINA5 0
+param set-default SIM_GZ_SV_MAXA5 90
+param set-default SIM_GZ_SV_MINA6 0
+param set-default SIM_GZ_SV_MAXA6 90
+param set-default SIM_GZ_SV_MINA7 0
+param set-default SIM_GZ_SV_MAXA7 90
+param set-default SIM_GZ_SV_MINA8 0
+param set-default SIM_GZ_SV_MAXA8 90
+
+# ---------------- VTOL transition envelope (similar-class estimates) ----------------
+param set-default VT_TYPE 1
+param set-default VT_ARSP_BLEND 30
+param set-default VT_ARSP_TRANS 42
+param set-default VT_TRANS_MIN_TM 8
+param set-default VT_B_TRANS_DUR 12
+param set-default VT_TILT_MC 0
+param set-default VT_TILT_TRANS 0.6
+param set-default VT_TILT_FW 1
+param set-default VT_FWD_THRUST_EN 4
+param set-default VT_FWD_THRUST_SC 0.6
+
+# ---------------- fixed-wing envelope ----------------
+param set-default FW_AIRSPD_STALL 36
+param set-default FW_AIRSPD_MIN 40
+param set-default FW_AIRSPD_TRIM 60
+param set-default FW_AIRSPD_MAX 85
+param set-default FW_T_CLMB_MAX 6
+param set-default FW_T_SINK_MAX 4
+param set-default FW_T_SINK_MIN 2.5
+param set-default FW_THR_TRIM 0.35
+param set-default FW_THR_MAX 0.8
+param set-default FW_THR_MIN 0.05
+param set-default FW_P_LIM_MIN -15
+param set-default FW_PSP_OFF 2
+param set-default FW_PR_FF 0.2
+param set-default FW_PR_P 0.9
+param set-default FW_RR_FF 0.1
+param set-default FW_RR_P 0.3
+param set-default NPFG_PERIOD 18
+
+# ---------------- multicopter envelope ----------------
+param set-default MPC_THR_HOVER 0.70
+param set-default MPC_XY_VEL_MAX 20
+param set-default MPC_XY_CRUISE 15
+param set-default MPC_ACC_HOR 2
+param set-default MPC_Z_VEL_MAX_UP 5
+param set-default MPC_Z_VEL_MAX_DN 3
+param set-default MPC_TKO_SPEED 2.5
+param set-default MPC_LAND_SPEED 1.0
+param set-default MPC_XY_VEL_P_ACC 3
+param set-default MPC_XY_VEL_I_ACC 4
+param set-default MPC_XY_VEL_D_ACC 0.1
+param set-default MC_AIRMODE 1
+param set-default MC_YAWRATE_P 0.4
+param set-default MC_YAWRATE_I 0.1
+
+param set-default MIS_TAKEOFF_ALT 30
+param set-default NAV_ACC_RAD 40
+param set-default NAV_DLL_ACT 2

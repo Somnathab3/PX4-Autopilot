@@ -120,4 +120,6 @@ px4_add_romfs_files(
 	70000_gz_atmos
 
 	# [22000, 22999] Reserve for custom models
+	22001_gz_evtol_joby_like
+	22002_gz_evtol_ehang_like
 )

@@ -1,0 +1,105 @@
+#!/bin/sh
+#
+# @name Research eVTOL coaxial octocopter (EHang-like, 8 arms x 2 props)
+#
+# @type Octorotor Coaxial
+#
+# Similar-to, not actual, parameters of a ~0.6 t two-seat multicopter eVTOL.
+# Generated geometry: airmetro-sim/models/generators/gen_evtol_models.py
+# Gazebo model: Tools/simulation/gz/models/evtol_ehang_like
+#
+# Simplification: PX4 commands 8 channels (one per arm). In Gazebo both props of
+# an arm follow the same channel and co-rotate so reaction torque gives yaw authority.
+#
+
+. ${R}etc/init.d/rc.mc_defaults
+
+PX4_SIMULATOR=${PX4_SIMULATOR:=gz}
+PX4_GZ_WORLD=${PX4_GZ_WORLD:=default}
+PX4_SIM_MODEL=${PX4_SIM_MODEL:=evtol_ehang_like}
+
+param set-default SIM_GZ_EN 1
+
+param set-default CA_AIRFRAME 0
+param set-default CA_ROTOR_COUNT 8
+
+# Arm positions in FRD body frame [m], arms at 22.5 + k*45 deg, radius 2.3 m
+param set-default CA_ROTOR0_PX 2.1249
+param set-default CA_ROTOR0_PY -0.8802
+param set-default CA_ROTOR0_PZ -0.2
+param set-default CA_ROTOR0_KM 0.05
+param set-default CA_ROTOR1_PX 0.8802
+param set-default CA_ROTOR1_PY -2.1249
+param set-default CA_ROTOR1_PZ -0.2
+param set-default CA_ROTOR1_KM -0.05
+param set-default CA_ROTOR2_PX -0.8802
+param set-default CA_ROTOR2_PY -2.1249
+param set-default CA_ROTOR2_PZ -0.2
+param set-default CA_ROTOR2_KM 0.05
+param set-default CA_ROTOR3_PX -2.1249
+param set-default CA_ROTOR3_PY -0.8802
+param set-default CA_ROTOR3_PZ -0.2
+param set-default CA_ROTOR3_KM -0.05
+param set-default CA_ROTOR4_PX -2.1249
+param set-default CA_ROTOR4_PY 0.8802
+param set-default CA_ROTOR4_PZ -0.2
+param set-default CA_ROTOR4_KM 0.05
+param set-default CA_ROTOR5_PX -0.8802
+param set-default CA_ROTOR5_PY 2.1249
+param set-default CA_ROTOR5_PZ -0.2
+param set-default CA_ROTOR5_KM -0.05
+param set-default CA_ROTOR6_PX 0.8802
+param set-default CA_ROTOR6_PY 2.1249
+param set-default CA_ROTOR6_PZ -0.2
+param set-default CA_ROTOR6_KM 0.05
+param set-default CA_ROTOR7_PX 2.1249
+param set-default CA_ROTOR7_PY 0.8802
+param set-default CA_ROTOR7_PZ -0.2
+param set-default CA_ROTOR7_KM -0.05
+
+# ESC channels; command range in rad/s must match <maxRotVelocity>
+param set-default SIM_GZ_EC_FUNC1 101
+param set-default SIM_GZ_EC_FUNC2 102
+param set-default SIM_GZ_EC_FUNC3 103
+param set-default SIM_GZ_EC_FUNC4 104
+param set-default SIM_GZ_EC_FUNC5 105
+param set-default SIM_GZ_EC_FUNC6 106
+param set-default SIM_GZ_EC_FUNC7 107
+param set-default SIM_GZ_EC_FUNC8 108
+param set-default SIM_GZ_EC_MIN1 20
+param set-default SIM_GZ_EC_MIN2 20
+param set-default SIM_GZ_EC_MIN3 20
+param set-default SIM_GZ_EC_MIN4 20
+param set-default SIM_GZ_EC_MIN5 20
+param set-default SIM_GZ_EC_MIN6 20
+param set-default SIM_GZ_EC_MIN7 20
+param set-default SIM_GZ_EC_MIN8 20
+param set-default SIM_GZ_EC_MAX1 314
+param set-default SIM_GZ_EC_MAX2 314
+param set-default SIM_GZ_EC_MAX3 314
+param set-default SIM_GZ_EC_MAX4 314
+param set-default SIM_GZ_EC_MAX5 314
+param set-default SIM_GZ_EC_MAX6 314
+param set-default SIM_GZ_EC_MAX7 314
+param set-default SIM_GZ_EC_MAX8 314
+
+# ---------------- multicopter envelope (similar-class estimates) ----------------
+param set-default MPC_THR_HOVER 0.70
+param set-default MPC_XY_VEL_MAX 36
+param set-default MPC_XY_CRUISE 28
+param set-default MPC_ACC_HOR 2
+param set-default MPC_Z_VEL_MAX_UP 4
+param set-default MPC_Z_VEL_MAX_DN 2.5
+param set-default MPC_TKO_SPEED 2
+param set-default MPC_LAND_SPEED 0.8
+param set-default MPC_XY_VEL_P_ACC 1.8
+param set-default MPC_XY_VEL_I_ACC 0.4
+param set-default MPC_XY_VEL_D_ACC 0.2
+param set-default MC_ROLLRATE_P 0.15
+param set-default MC_PITCHRATE_P 0.15
+param set-default MC_YAWRATE_P 0.2
+param set-default MC_AIRMODE 0
+
+param set-default MIS_TAKEOFF_ALT 30
+param set-default NAV_ACC_RAD 15
+param set-default NAV_DLL_ACT 2
